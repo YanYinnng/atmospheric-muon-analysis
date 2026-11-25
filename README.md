@@ -2,7 +2,7 @@
 
 **Atmospheric muon candidates with two CosmicWatch desktop detectors: coincidence counting, Poisson / exponential statistics and a SiPM voltage cut.**
 
-2025 年暑期科研见习项目。用两台塑料闪烁体 + SiPM 的桌面探测器做主从符合测量，检验候选事件是否像独立随机到达的粒子，并尝试用 SiPM 峰值电压阈值压低低能背景。我参与了取数，也参与了少量装置搭建，主要负责数据分析。
+2025 年暑期科研见习项目（上海交通大学物理与天文学院李亮课题组）。用两台塑料闪烁体 + SiPM 的桌面探测器做主从符合测量，检验候选事件是否像独立随机到达的粒子，并尝试用 SiPM 峰值电压阈值压低低能背景。我参与了取数，也参与了少量装置搭建，主要负责数据分析。
 
 - **复现**：原分析用 PyROOT 完成。本仓库用 NumPy/SciPy 重写，拟合口径与 ROOT 默认一致，原报告的数字全部复现：泊松拟合 χ²/NDF 为 1.83 / 1.94，阈值扫描的极大值在 18 mV。
 - **补充检查**：重建时又做了三项检查，修正了原先的部分解读，详见[补充检查](#补充检查)。
@@ -19,6 +19,7 @@
 <img src="docs/detector_schematic.png" width="40%" alt="探测器结构示意">
 <img src="docs/setup.jpg" width="58%" alt="叠放的两台探测器与取数现场">
 </p>
+<p align="center"><sub>左：探测器结构示意（引自见习小组的报告材料）；右：叠放的两台探测器与取数现场</sub></p>
 
 - **探测器**：基于 [CosmicWatch](https://github.com/spenceraxani/CosmicWatch-Desktop-Muon-Detector-v2) 开源设计，闪烁体为 25×25×2 cm³ 塑料闪烁体。带电粒子在闪烁体中沉积能量发光，SiPM 把光转成电脉冲，经放大和峰值保持后由 Arduino Nano 读取。超过阈值的事件记下时间戳、ADC 值、SiPM 峰值电压、累计死时间和温度。
 - **主从符合**：两台探测器上下叠放（右图）。master 记录自身所有过阈事件；slave 只在 master 触发后 15 μs 内自己也过阈时才记录。穿透性强的缪子能同时穿过两块闪烁体，而单板噪声和低能本底很难同时触发两块，所以 slave 的事件更"干净"。
@@ -106,4 +107,4 @@ python -m unittest discover -s tests -t .     # 7 项测试，用已知参数的
 | `tests/` | 在已知计数率和死时间的模拟数据上检验以上方法 |
 | `data/` | 两组主从测量的事件表及字段说明 |
 | `figures/`、`results/` | `analyze.py` 的输出 |
-| `docs/` | 装置示意图与照片 |
+| `docs/` | 装置示意图（引自见习小组材料）与取数照片 |
